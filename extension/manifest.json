@@ -1,0 +1,75 @@
+{
+  "manifest_version": 3,
+  "name": "Bilibili Live Video Blocker",
+  "version": "2.0.0",
+  "description": "阻止 B站直播视频流下载，并用插件自己的纯音频流保留直播声音。弹幕与其他直播间功能不受影响。",
+  "minimum_chrome_version": "111",
+
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "*://*.bilivideo.com/*",
+    "*://*.bilivideo.cn/*",
+    "*://live.bilibili.com/*",
+    "*://api.live.bilibili.com/*",
+    "http://127.0.0.1/*"
+  ],
+
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "bilibili_live_ruleset",
+        "enabled": false,
+        "path": "rules/video-rules.json"
+      }
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://live.bilibili.com/*"],
+      "js": ["content/hook-injector.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["*://live.bilibili.com/*"],
+      "js": [
+        "content/media-stop.js",
+        "content/probe-reporter.js",
+        "content/live-state.js",
+        "content/overlay.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": ["*://live.bilibili.com/*"],
+      "js": ["content/audio-player.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["content/page-probe.js", "content/audio-page.js", "vendor/mpegts.min.js"],
+      "matches": ["*://live.bilibili.com/*"]
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "B站直播视频屏蔽"
+  }
+}

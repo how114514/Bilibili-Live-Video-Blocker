@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>B站直播视频屏蔽</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>B站直播视频屏蔽</h1>
+      <label class="switch">
+        <input type="checkbox" id="toggle" />
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <section class="status" id="status-line">读取状态…</section>
+
+    <section class="rows">
+      <div class="row"><span>视频</span><b id="video-state" class="muted">—</b></div>
+      <div class="row"><span>音频</span><b id="audio-state" class="muted">—</b></div>
+      <div class="row"><span>弹幕</span><b id="danmaku-state" class="muted">—</b></div>
+    </section>
+
+    <section class="stats">
+      <div class="row"><span>已阻止视频请求</span><b id="blocked-count">0</b></div>
+      <div class="row"><span>估算节省流量</span><b id="saved-bytes">—</b></div>
+      <div class="row"><span>运行时间</span><b id="uptime">—</b></div>
+    </section>
+
+    <p class="note" id="audio-detail">音频：—</p>
+
+    <p class="note" id="note">
+      流量为<strong>估算值</strong>：按实测平均码率乘以屏蔽时长推算，不是精确统计。
+    </p>
+
+    <footer>
+      <span id="page-hint" class="hint">当前不在 B站直播间</span>
+      <button id="reset" type="button">重置统计</button>
+    </footer>
+
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>

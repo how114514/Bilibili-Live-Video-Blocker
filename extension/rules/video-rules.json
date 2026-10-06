@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "regexFilter": "^https?://.*/live-bvc/.*\\.(?:flv|m3u8|m4s|ts)(?:\\?|$)",
+      "resourceTypes": ["xmlhttprequest", "media", "other", "object", "sub_frame"]
+    }
+  }
+]

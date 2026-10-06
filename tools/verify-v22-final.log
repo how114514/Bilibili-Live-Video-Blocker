@@ -1,0 +1,74 @@
+[05:35:33] ===== A 普通直播间 /6（插件 ON，默认 autoplay 策略）
+[05:35:54]    直播间 处于 autoplay 拦截态 → 派发页面手势 {"x":12,"y":12,"tag":"div"}
+   PASS  A1 插件 <audio> 恰好 1 个  — count=1
+   PASS  A2 纯音频在播放且 currentTime 前进  — 经页面手势恢复；{"paused":false,"muted":false,"volume":1,"t":29.7,"decA":96309}
+   PASS  A3 音频未静音  — muted=false volume=1
+   PASS  A4 视频网络请求 = 0  — web=0B 请求20个 / 插件音频=0B
+   PASS  A5 圆形按钮存在且唯一、在视口内  — {"cls":"is-on","icon":"🔊","hidden":false,"title":"省流量模式已开启 · 音频播放中"}
+   PASS  A6 音量滑块存在、可见、取值范围 0~100  — {"value":"100","hidden":false}
+   PASS  A7 滑块默认 = 100（storage 无值时）  — value=100 storage=null
+   PASS  A8 当前无首页大屏相关的房间号来源  — engine.room=6 URL 房间=6
+[05:35:59]    ----- B 音量：拖动到 30 → 0 → 回到 80
+   PASS  B1 拖到 ~30：audio.volume 跟着变（约 0.3）  — audio.volume=0.24 slider=24
+   PASS  B2 storage.volume 已写入且与滑块一致  — storage=0.24 slider=24
+   PASS  B3 音量变化没有重新取流  — 取流次数=1
+   PASS  B4 音量 > 0 时按钮图标为 🔊  — icon=🔊
+   PASS  B5 拖到 0：audio.volume = 0（声音消失）  — audio.volume=0 slider=0
+   PASS  B6 音量为 0 时按钮图标变 🔇  — icon=🔇
+   PASS  B7 音量为 0 时插件仍是开启态（静音 ≠ 关闭）  — cls=is-on
+   PASS  B8 音量为 0 时音频仍在播放（只是没声音）  — paused=false
+   PASS  B9 调回 ~80：audio.volume 恢复  — audio.volume=0.8 slider=80
+   PASS  B10 调回后按钮图标回到 🔊  — icon=🔊
+   PASS  B11 音量写入 storage 且为 ~0.8  — storage=0.8
+   PASS  B12 音量操作期间音频一直在播放（未重建）  — t 30.5 → 32.6
+[05:36:02]    ----- C ON/OFF：音量不丢
+   PASS  C1 点击按钮 → 插件关闭（enabled=false）  — enabled=false
+   PASS  C2 关闭后插件 <audio> 已移除  — count=0
+   PASS  C3 关闭后音量滑块隐藏（无插件音频）  — slider={"value":"80","hidden":true}
+   PASS  C4 关闭不影响已保存的音量  — storage.volume=0.8
+   PASS  C5 重新开启 → 音频恢复到保存的音量  — audio.volume=0.8 storage=0.8
+   PASS  C6 重新开启 → 滑块恢复并显示保存值  — slider={"value":"80","hidden":false}
+[05:36:08]    ----- D 房间切换 A→B→C→A（音量应保持）
+[05:36:09]    链上可用房间：6 / 7734200 / 545068
+[05:36:30]    切换到 /6 后 处于 autoplay 拦截态 → 派发页面手势 {"x":12,"y":12,"tag":"div"}
+   PASS  D1 /6：音频 ≤1 且唯一  — count=1
+   PASS  D1b /6：音量保持 ~0.8  — audio.volume=0.8 storage=0.8
+   PASS  D1c /6：视频网络 = 0  — web=0B / 插件音频=0B
+   PASS  D1d /6：按钮与滑块都在  — btn=false slider=false
+[05:36:55]    切换到 /7734200 后 处于 autoplay 拦截态 → 派发页面手势 {"x":12,"y":12,"tag":"div"}
+   PASS  D2 /7734200：音频 ≤1 且唯一  — count=1
+   PASS  D2b /7734200：音量保持 ~0.8  — audio.volume=0.8 storage=0.8
+   PASS  D2c /7734200：视频网络 = 0  — web=0B / 插件音频=0B
+   PASS  D2d /7734200：按钮与滑块都在  — btn=false slider=false
+[05:37:21]    切换到 /545068 后 处于 autoplay 拦截态 → 派发页面手势 {"x":12,"y":12,"tag":"div"}
+   PASS  D3 /545068：音频 ≤1 且唯一  — count=1
+   PASS  D3b /545068：音量保持 ~0.8  — audio.volume=0.8 storage=0.8
+   PASS  D3c /545068：视频网络 = 0  — web=0B / 插件音频=0B
+   PASS  D3d /545068：按钮与滑块都在  — btn=false slider=false
+[05:37:46]    切换到 /6 后 处于 autoplay 拦截态 → 派发页面手势 {"x":12,"y":12,"tag":"div"}
+   PASS  D4 /6：音频 ≤1 且唯一  — count=1
+   PASS  D4b /6：音量保持 ~0.8  — audio.volume=0.8 storage=0.8
+   PASS  D4c /6：视频网络 = 0  — web=0B / 插件音频=0B
+   PASS  D4d /6：按钮与滑块都在  — btn=false slider=false
+[05:37:51]    ----- E F5 刷新（房间页）
+[05:38:30]    刷新后 处于 autoplay 拦截态 → 派发页面手势 {"x":12,"y":12,"tag":"div"}
+   PASS  E1 刷新后音频恢复且唯一  — {"paused":false,"muted":false,"volume":0.8,"t":27.2,"decA":104118}
+   PASS  E2 刷新后音量保持 ~0.8  — audio.volume=0.8 storage=0.8
+   PASS  E3 刷新后按钮 + 滑块恢复  — btn=false slider=false
+   PASS  E4 刷新后视频流量 = 0  — web=0B
+[05:38:35]    ----- F /blanc/ 布局（/6）
+[05:38:55]    /blanc/ 处于 autoplay 拦截态 → 派发页面手势 {"x":12,"y":12,"tag":"div#main-ctnr"}
+   PASS  F1 /blanc/ 房间识别正确  — engine.room=6
+   PASS  F2 /blanc/ 音频唯一  — count=1
+   PASS  F3 /blanc/ 按钮 + 滑块都在（同一套 UI）  — btn={"cls":"is-on","icon":"🔊","hidden":false,"title":"省流量模式已开启 · 音频播放中"} slider={"value":"80","hidden":false}
+   PASS  F4 /blanc/ 音量保持 ~0.8  — audio.volume=0.8
+[05:39:00] ===== G 首页 live.bilibili.com/（应完全不再建立插件音频）
+   PASS  G1 首页不创建插件 <audio>  — count=0
+   PASS  G2 首页不显示插件按钮  — {"cls":"is-warn","icon":"🔊","hidden":true,"title":"省流量模式已开启 · 未播放"}
+   PASS  G3 首页不显示音量滑块  — {"value":"80","hidden":true}
+   PASS  G4 首页插件状态为不在直播间  — phase=idle room=null detail=当前不是直播间页面
+   PASS  G5 首页不产生纯音频取流  — 取流次数=0
+   PASS  G6 live-state 判定首页不是直播播放页  — snapshot=false
+
+================================
+检查项: 56  失败: 0
